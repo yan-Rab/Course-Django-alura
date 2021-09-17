@@ -44,7 +44,6 @@ class RegistrationsByStudentSerializer(serializers.ModelSerializer):
 
 
     def get_time_course(self, obj):
-        # return TIME_COURSE_VALUES[obj.time_course][1]
         return obj.get_time_course_display()
 
 

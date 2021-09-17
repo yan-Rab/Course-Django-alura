@@ -32,4 +32,3 @@ class Registration(models.Model):
 
     def __str__(self) -> str:
         return self.student.name
-# Create your models here.
