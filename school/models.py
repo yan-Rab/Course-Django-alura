@@ -5,11 +5,13 @@ from django.db import models
 from .constants import LEVELS_VALUES
 from .constants import TIME_COURSE_VALUES
 
+
 class Student(models.Model):
     name = models.TextField(max_length=255)
-    rg = models.CharField(max_length=9)
-    cpf = models.CharField(max_length=11)
+    rg = models.CharField(max_length=9, unique=True)
+    cpf = models.CharField(max_length=11, unique=True)
     birth_date = models.DateField()
+    cellphone = models.CharField(max_length=15)
 
     def __str__(self) -> str:
         return self.name

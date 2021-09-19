@@ -5,13 +5,35 @@ from rest_framework import serializers
 from .models import Student
 from .models import Course
 from .models import Registration
+from .validators import cpf_isvalid
+from .validators import name_isvalid
+from .validators import rg_isvalid
+from .validators import birth_date_isvalid
+from .validators import cellphone_isvalid
 
 
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ['id', 'name', 'rg', 'cpf', 'birth_date']
+        fields = ['id', 'name', 'rg', 'cpf', 'birth_date', 'cellphone']
 
+    def validate(self, data):
+        if not cpf_isvalid(data['cpf']):
+            raise serializers.ValidationError({'cpf': 'O CPF não é válido'})
+
+        if not name_isvalid(data['name']):
+            raise serializers.ValidationError({'name': 'Não inclua números neste campo'})
+
+        if not rg_isvalid(data['rg']):
+            raise serializers.ValidationError({'rg': 'RG inválido'})
+
+        if not birth_date_isvalid(data['birth_date']):
+            raise serializers.ValidationError({'birth_date': 'Data de nascimento inválida'})
+
+        if not cellphone_isvalid(data['cellphone']):
+            raise serializers.ValidationError({'cellphone': 'Número inválido'})
+
+        return data
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
