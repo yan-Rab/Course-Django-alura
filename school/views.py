@@ -1,5 +1,9 @@
+# Django
+from django_filters.rest_framework import DjangoFilterBackend
+
 # Third party
 from rest_framework import viewsets
+from rest_framework import filters
 from rest_framework.generics import ListAPIView
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -22,6 +26,9 @@ class StudentsViewset(viewsets.ModelViewSet):
     serializer_class = StudentSerializer
     authentication_classes = [BasicAuthentication]
     permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+    ordering_fields = ['name']
+    search_fields = ['name', 'cpf']
 
 
 class CoursesViewset(viewsets.ModelViewSet):
@@ -30,6 +37,10 @@ class CoursesViewset(viewsets.ModelViewSet):
     serializer_class = CourseSerializer
     authentication_classes = [BasicAuthentication]
     permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+    ordering_fields = ['name']
+    search_fields = ['name', 'code']
+    filterset_fields = ['level']
 
 
 class RegistrationsViewset(viewsets.ModelViewSet):
